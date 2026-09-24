@@ -126,6 +126,7 @@ export default function CurrencyConverter() {
     <main className="converter-page">
       <section className="converter-card">
         <h1>Currency Converter</h1>
+        <p className="author-byline">By: Elisol Bastouri</p>
 
         <label className="field-label" htmlFor="amount">Amount</label>
         <input

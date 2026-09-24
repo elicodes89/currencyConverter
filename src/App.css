@@ -42,6 +42,13 @@
   text-align: center;
 }
 
+.author-byline {
+  margin: -1.5rem 0 2rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
 .field-label {
   display: block;
   margin-bottom: 0.4rem;
