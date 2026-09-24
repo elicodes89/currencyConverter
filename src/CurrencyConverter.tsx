@@ -51,10 +51,10 @@ export default function CurrencyConverter() {
       }
 
       try {
-        const res = await fetch(`${API_BASE}/currencies?api_key=${API_KEY}`);
-        if (!res.ok) throw new Error("Failed to fetch currencies");
+        const response = await fetch(`${API_BASE}/currencies?api_key=${API_KEY}`);
+        if (!response.ok) throw new Error("Failed to fetch currencies");
 
-        const data: CurrenciesResponse = await res.json();
+        const data: CurrenciesResponse = await response.json();
         const items = data.response ?? data.data ?? [];
         const options = items
           .map((item) => ({
@@ -65,8 +65,8 @@ export default function CurrencyConverter() {
 
         if (options.length === 0) throw new Error("No currencies were returned");
         setCurrencies(options);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load currencies");
+      } catch (error) {
+        setError(error instanceof Error ? error.message : "Failed to load currencies");
       }
     };
 
@@ -92,25 +92,24 @@ export default function CurrencyConverter() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(
+      const response = await fetch(
         `${API_BASE}/convert?api_key=${API_KEY}&from=${from}&to=${to}&amount=${numericAmount}`
       );
-      if (!res.ok) throw new Error("Failed to fetch exchange rate");
-      const data: ConvertResponse = await res.json();
+      if (!response.ok) throw new Error("Failed to fetch exchange rate");
+      const data: ConvertResponse = await response.json();
       if (data.meta.code !== 200) throw new Error("CurrencyBeacon returned an error");
       const converted = data.response.value;
       setResult(converted);
       setRate(converted / numericAmount);
       setDate(new Date().toLocaleDateString());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Something went wrong");
       setResult(null);
     } finally {
       setLoading(false);
     }
   }, [amount, currencies.length, from, to]);
 
-  // Debounce conversion as inputs change
   useEffect(() => {
     const timer = setTimeout(() => {
       convert();
